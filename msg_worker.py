@@ -3,7 +3,7 @@ import io
 import os
 
 class MSG_worker:
-    def __init__(self,filename, users=[''], user_file='users.txt', ch_usr='', usr=''):
+    def __init__(self,filename='', users=[''], user_file='users.txt', ch_usr='', usr=''):
         self.filename = filename
         self.users = users
         self.user_file = user_file
