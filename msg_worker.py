@@ -3,7 +3,8 @@ import io
 import os
 
 class MSG_worker:
-    def __init__(self, users=[''], user_file='users.txt', ch_usr='', usr=''):
+    def __init__(self,filename, users=[''], user_file='users.txt', ch_usr='', usr=''):
+        self.filename = filename
         self.users = users
         self.user_file = user_file
         self.ch_usr = ch_usr
@@ -33,14 +34,20 @@ class MSG_worker:
         return 0
 
     def extract_file(self,new_file):
-        msgs = [ x for x in os.listdir() if '.msg' in x]
+        # msgs = [ x for x in os.listdir() if '.msg' in x]
+        # result = []
+        # for msg in msgs:
+        #     text = extract_msg.Message(msg).body.split('\n')
+        #     for row in text:
+        #         for x in self.users:
+        #             if x in row:
+        #                 result.append(row)
         result = []
-        for msg in msgs:
-            text = extract_msg.Message(msg).body.split('\n')
-            for row in text:
-                for x in self.users:
-                    if x in row:
-                        result.append(row)
+        text = extract_msg.Message(self.filename).body.split('\n')
+        for row in text:
+            for x in self.users:
+                if x in row:
+                    result.append(row)
         self.save_file(new_file,result)
 
 

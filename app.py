@@ -12,8 +12,8 @@ all_users = MSG_worker.parse_users('users.txt')
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def extract_mails(input,users, output):
-    msg = MSG_worker(input,users)
+def extract_mails(input, users, output):
+    msg = MSG_worker(filename=input,users=users)
     msg.extract_file(output)
     return output
 def ch_users(usr,flag):
