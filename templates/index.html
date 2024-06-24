@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert XML</title>
+    <style type="text/css">
+        body {
+              font-size: 14pt;
+              font: 'Calibri';
+              text-align: justify-all;
+        }
+        .cls {
+              color: black;
+              font: 'Calibri';
+              line-height: 150%;
+              margin-left: 40%;
+              text-align: left;
+        }
+        .clsrad{
+              margin-left: 3%;
+        }
+        .buttons {
+            margin: 0 40%;
+            line-height: 250%;
+            font-size: 22pt;
+            text-align: center;
+        }
+        .flash {
+            margin: 0 40%;
+            font-size: 22pt;
+            color: red;
+            font-weight: bold;
+            font: 'Calibri';
+        }
+    </style>
+
+</head>
+<body>
+    <h1 align="center">Парсер сообщений из ЦУП</h1>
+    
+    <!-- Submit Button for a Form -->
+    <form action="send" method="POST" name="edit_users" enctype="multipart/form-data">
+        <div class="cls">
+            Добавить/удалить пользователя
+            <input type="text" name="usr" value="i.ivanov">
+            <br/>
+            <input type="radio" name="ch_usr" value="del" class=clsrad>удалить</input><br/>
+            <input type="radio" name="ch_usr" value="add" class=clsrad checked="checked">добавить</input><br/>
+        </div>
+        <div class="buttons">
+            <input  type="submit" name="add_usr" value="Пользователь">
+        </div>
+        </br>
+    </form>
+
+    <form action="send" method="POST" name="parse" enctype="multipart/form-data">
+        <div class="cls">
+            Файл:
+            <input type="file" name="upload_file" multiple/>
+        </div>
+        <div class="cls">
+            Выбрать пользователя </br>
+            <select name="users" multiple>
+                {% for item in users %}
+                <option value="{{ item }}">{{ item }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="buttons">
+            <input  type="submit" name="parse" value="Старт">
+        </div>
+    </form>
+    <div class="flash">
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endwith %}
+    </div>
+
+</body>
+</html>
