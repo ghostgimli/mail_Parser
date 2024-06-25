@@ -24,9 +24,9 @@ class MSG_worker:
     #'users.txt'
 
     def set_users_file(self):
-        if self.ch_usr == 'add':
+        if self.ch_usr == 'Добавить':
             self.users.append(self.usr)
-        elif self.ch_usr == 'del':
+        elif self.ch_usr == 'Удалить':
             self.users.remove(self.usr)
         else:
             return -1

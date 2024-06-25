@@ -57,16 +57,16 @@ def send_data():
             flash('No file created')
             return redirect(request.url_root)
 
-    if 'add_usr' in list(request.form.keys()):
+    if 'ch_usr' in list(request.form.keys()):
         ch_usr = request.form['ch_usr']
         usr = request.form['usr'] + '\n'
         if usr == '':
             flash('Введите имя пользователя')
             return redirect(request.url_root)
-        if usr not in all_users and ch_usr == 'del':
+        if usr not in all_users and ch_usr == 'Удалить':
             flash('Пользователя нет в файле')
             return redirect(request.url_root)
-        if usr in all_users and ch_usr == 'add':
+        if usr in all_users and ch_usr == 'Добавить':
             flash('Пользователь уже есть в файле')
             return redirect(request.url_root)
         ch_users(usr,ch_usr)
