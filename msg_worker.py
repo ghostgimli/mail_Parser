@@ -42,13 +42,16 @@ class MSG_worker:
         #         for x in self.users:
         #             if x in row:
         #                 result.append(row)
+
         result = []
-        text = extract_msg.Message(self.filename).body.split('\n')
+        msg = extract_msg.Message(self.filename)
+        text = msg.body.split('\n')
         for row in text:
             for x in self.users:
                 if x in row:
                     result.append(row)
         self.save_file(new_file,result)
+        msg.close()
 
 
 

@@ -24,10 +24,15 @@ def ch_users(usr,flag):
 def index():
     return render_template('index.html', users=all_users)
 
+def clear_uploads(folder):
+    for filename in os.listdir(folder):
+        os.remove(os.path.join(folder,filename))
 
 @app.route('/send', methods=["GET", "POST"])
 def send_data():
+
     if 'parse' in list(request.form.keys()):
+        clear_uploads(app.config['UPLOAD_FOLDER'])
         if 'upload_file' not in request.files:
             flash('No file part')
             return redirect(request.url_root)
@@ -37,22 +42,24 @@ def send_data():
             return redirect(request.url_root)
         if not app.config['UPLOAD_FOLDER'] in os.listdir():
             os.mkdir(app.config['UPLOAD_FOLDER'])
-
+        upload_file_path = os.path.join(app.config['UPLOAD_FOLDER'],
+                                        datetime.date.today().strftime('%d.%m.%Y') + '.msg')
         for file in files:
             itsok=allowed_file(file.filename)
             if itsok == False:
                 flash('Wrong format')
                 return redirect(request.url_root)
-            upload_file_path = os.path.join(app.config['UPLOAD_FOLDER'],
-                                            datetime.date.today().strftime('%d.%m.%Y') + '.msg')
+
             file.save(upload_file_path)
 
         download_file_path = os.path.join(app.config['UPLOAD_FOLDER'],
                                         datetime.date.today().strftime('%d.%m.%Y') + ' parsed' + '.txt')
         #Очень странно парсятся значения из формы с окончаниями /r/n
         users = [ x.replace('\r\n','') for x in request.form.getlist('users')]
+        output = extract_mails(upload_file_path, users, download_file_path)
+
         try:
-            return send_file(extract_mails(upload_file_path, users, download_file_path), as_attachment=True)
+            return send_file(output, as_attachment=True)
         except FileNotFoundError:
             flash('No file created')
             return redirect(request.url_root)

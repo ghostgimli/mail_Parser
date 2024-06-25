@@ -16,5 +16,3 @@ y.usanova
 
 e.veselaya
 
-i.ivanov
-
