@@ -4,6 +4,7 @@ from msg_worker import MSG_worker
 import datetime
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 ALLOWED_EXTENSIONS = {'msg'}
 
@@ -78,8 +79,3 @@ def send_data():
             return redirect(request.url_root)
         ch_users(usr,ch_usr)
         return render_template('index.html', users=all_users)
-
-
-if __name__ == '__main__':
-    app.secret_key = os.urandom(24)
-    app.run()
