@@ -79,6 +79,7 @@ def send_data():
         ch_users(usr,ch_usr)
         return render_template('index.html', users=all_users)
 
-#
-# if __name__ == '__main__':
-#     app.run()
+
+if __name__ == '__main__':
+    app.secret_key = os.urandom(24)
+    app.run()
